@@ -7,17 +7,42 @@ from auction_lab.plots import second_plot, second_sweep_plot, fixed_plot, first_
 
 st.set_page_config(page_title="Mechanism Lab",page_icon="⚖️",layout="wide")
 st.markdown("""<style>
-.stApp {background:#f5f7fb;} h1,h2,h3 {color:#14243a;}
-[data-testid="stMetric"] {background:white;border:1px solid #e2e8f0;border-radius:14px;padding:18px;}
-[data-testid="stSidebar"] {background:#eaf0f8;}
-.table-scroll {overflow:auto;max-height:360px;border:1px solid #dce4ee;border-radius:10px;background:white;}
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+html,body,.stApp,[data-testid="stSidebar"] {font-family:'Inter',system-ui,sans-serif;}
+.stApp {background:#f4f6fa;}
+.block-container {padding-top:1.5rem;max-width:1280px;}
+header[data-testid="stHeader"] {background:transparent;}
+#MainMenu,footer {visibility:hidden;}
+h1,h2,h3 {color:#0f1f38;letter-spacing:-0.01em;font-weight:650;}
+h2 {border-bottom:1px solid #dde4ee;padding-bottom:.4rem;margin-top:.5rem;}
+.hero {background:linear-gradient(120deg,#0f2748 0%,#1d4e89 100%);color:white;border-radius:16px;
+ padding:28px 34px;margin-bottom:18px;box-shadow:0 6px 20px rgba(15,39,72,.18);}
+.hero .eyebrow {font-size:12px;letter-spacing:.14em;text-transform:uppercase;opacity:.75;font-weight:600;}
+.hero h1 {color:white;margin:6px 0 6px;font-size:2.2rem;padding:0;}
+.hero p {margin:0;opacity:.88;font-size:1rem;}
+[data-testid="stMetric"] {background:white;border:1px solid #e2e8f0;border-left:4px solid #1d4e89;
+ border-radius:12px;padding:16px 18px;box-shadow:0 1px 3px rgba(15,39,72,.06);}
+[data-testid="stMetricLabel"] {color:#5b6b82;font-weight:500;}
+[data-testid="stMetricValue"] {color:#0f1f38;font-weight:700;}
+[data-testid="stSidebar"] {background:#ffffff;border-right:1px solid #e2e8f0;}
+.stTabs [data-baseweb="tab-list"] {gap:6px;border-bottom:1px solid #dde4ee;}
+.stTabs [data-baseweb="tab"] {height:44px;padding:0 18px;border-radius:8px 8px 0 0;font-weight:600;color:#5b6b82;}
+.stTabs [aria-selected="true"] {color:#1d4e89;background:#e8f0fa;}
+.stButton>button,.stDownloadButton>button {border-radius:8px;border:1px solid #1d4e89;color:#1d4e89;
+ background:white;font-weight:600;}
+.stDownloadButton>button:hover {background:#1d4e89;color:white;}
+[data-testid="stImage"] img,[data-testid="stImageContainer"] img {border-radius:10px;border:1px solid #e2e8f0;background:white;}
+.table-scroll {overflow:auto;max-height:360px;border:1px solid #dce4ee;border-radius:10px;background:white;
+ box-shadow:0 1px 3px rgba(15,39,72,.05);margin-bottom:8px;}
 .data-table {width:100%;font-size:13px;border-collapse:collapse;white-space:nowrap;}
-.data-table th {background:#eaf0f8;text-align:left;position:sticky;top:0;}
+.data-table th {background:#eef3fa;color:#34476a;text-align:left;position:sticky;top:0;font-weight:600;}
+.data-table tr:nth-child(even) td {background:#fafbfd;}
 .data-table th,.data-table td {padding:9px 12px;border-bottom:1px solid #edf1f7;}
+.app-footer {text-align:center;color:#7a889c;font-size:12px;margin-top:36px;padding-top:14px;border-top:1px solid #dde4ee;}
 </style>""",unsafe_allow_html=True)
-st.caption("AUTONOMOUS SYSTEMS / ASSIGNMENT 04")
-st.title("Mechanism Lab")
-st.markdown("Explore how bidding rules shape utility, competition, and truthful behavior.")
+st.markdown("""<div class="hero"><div class="eyebrow">Autonomous Systems &middot; Assignment 04</div>
+<h1>Mechanism Lab</h1>
+<p>Explore how bidding rules shape utility, competition, and truthful behavior across second-price, first-price, and VCG mechanisms.</p></div>""",unsafe_allow_html=True)
 with st.sidebar:
     st.header("Experiment controls")
     trials=st.selectbox("Trials per configuration",[100_000,200_000],index=0)
@@ -121,3 +146,5 @@ The repeated 'parts A and C' is interpreted as repeating both second-price exper
 
 Run `python run_experiments.py` for the full report and plots in `results/`. Run `python -m pytest -q` for tests. These are simulations of the specified models, not observations of human bidding.
 """)
+
+st.markdown('<div class="app-footer">Mechanism Lab &middot; Monte Carlo simulations of the specified models &middot; seeded and reproducible</div>',unsafe_allow_html=True)
