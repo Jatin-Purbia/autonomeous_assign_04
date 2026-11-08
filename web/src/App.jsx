@@ -4,7 +4,7 @@ import {
 } from "recharts";
 import { BOOK_COSTS, POS, vcg } from "./vcg.js";
 
-const C = { blue: "#6ea8ff", teal: "#2dd4bf", amber: "#fbbf24", pink: "#f472b6", violet: "#a78bfa", green: "#4ade80", red: "#f87171", grid: "#243049", text: "#94a3b8" };
+const C = { blue: "#1d4ed8", teal: "#0f766e", amber: "#b45309", pink: "#be185d", violet: "#6d28d9", green: "#15803d", red: "#b91c1c", grid: "#e5e9f0", text: "#64748b" };
 const STRAT = { truthful: "Truthful", half: "Half value", random: "Random bid" };
 const SCOLOR = { truthful: C.teal, half: C.amber, random: C.pink };
 const TABS = ["Overview", "Second price", "First price", "VCG network", "Method"];
@@ -37,7 +37,7 @@ const Stat = ({ label, value, hint, color = C.blue }) => (
   </div>
 );
 
-const tip = { contentStyle: { background: "#0b1220", border: "1px solid #2b3a58", borderRadius: 10, color: "#e2e8f0" }, labelStyle: { color: "#94a3b8" } };
+const tip = { contentStyle: { background: "#fff", border: "1px solid #d5dbe6", borderRadius: 8, color: "#0f172a", boxShadow: "0 4px 14px #0f172a1f" }, labelStyle: { color: "#475569" } };
 const axis = { stroke: C.text, tick: { fill: C.text, fontSize: 12 } };
 
 function BidChart({ rows, v, height = 320, mini = false, color = C.blue }) {
@@ -173,7 +173,7 @@ function FirstPrice({ data }) {
   const peak = (n) => data.first_price.filter((r) => r.value === value && r.n === n).reduce((a, b) => (b.mean_utility > a.mean_utility ? b : a));
   const metrics = [["mean_utility", "Expected utility"], ["win_fraction", "Win probability"], ["winner_could_pay_less_fraction", "Winner could pay less"], ["mean_winning_margin", "Winning margin"]];
   return (
-    <Card title="First price · deviating from equilibrium" sub="Bidder 1 bids k·v; the other n−1 bidders bid ((n−1)/n)·v. Grid k = 0.1 … 2.0.">
+    <Card title="First price · deviating from equilibrium" sub="Bidder 1 bids k·v; the other n−1 bidders bid ((n−1)/n)·v. Grid k = 0.1 … 2.0. Dashed red line: k = 1 (bid equals value).">
       <div className="controls">
         <Seg label="Bidder 1 value" value={value} onChange={setValue} options={[["uniform", "Uniform"], ["0.2", "0.2"], ["0.5", "0.5"], ["0.8", "0.8"]]} />
         <Seg label="Metric" value={metric} onChange={setMetric} options={metrics} />
@@ -185,7 +185,7 @@ function FirstPrice({ data }) {
             <XAxis dataKey="k" type="number" domain={[0, 2]} {...axis} tickCount={9} label={{ value: "bid fraction k", position: "insideBottom", offset: -6, fill: C.text }} />
             <YAxis {...axis} />
             <Tooltip {...tip} formatter={(x) => f(x, 4)} labelFormatter={(l) => "k = " + l} />
-            <ReferenceLine x={1} stroke={C.red} strokeDasharray="4 4" label={{ value: "k=1 (value)", fill: C.red, fontSize: 11, position: "top" }} />
+            <ReferenceLine x={1} stroke={C.red} strokeDasharray="4 4" />
             {ns.map((n) => <Line key={n} dataKey={"n" + n} name={`n = ${n}`} stroke={col[n]} dot={false} strokeWidth={2.6} isAnimationActive={false} />)}
             <Legend verticalAlign="top" wrapperStyle={{ color: C.text }} />
           </LineChart>
@@ -203,7 +203,7 @@ function Network({ r, edge, onEdge }) {
   return (
     <svg viewBox="0 0 720 320" className="net">
       <defs>
-        <marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="#64748b" /></marker>
+        <marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="#94a3b8" /></marker>
         <marker id="ahs" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill={C.teal} /></marker>
       </defs>
       {Object.keys(BOOK_COSTS).map((e) => {
@@ -214,14 +214,14 @@ function Network({ r, edge, onEdge }) {
         return (
           <g key={e} onClick={() => onEdge(e)} style={{ cursor: "pointer" }}>
             <line x1={sx} y1={sy} x2={ex} y2={ey} stroke="transparent" strokeWidth="18" />
-            <line x1={sx} y1={sy} x2={ex} y2={ey} stroke={on ? C.teal : "#475569"} strokeWidth={on ? 4 : 2} markerEnd={`url(#${on ? "ahs" : "ah"})`} strokeDasharray={on ? "" : "6 4"} />
-            <rect x={(sx + ex) / 2 - 30} y={(sy + ey) / 2 - 12} width="60" height="24" rx="12" fill={act ? C.violet : "#0b1220"} stroke={on ? C.teal : "#334155"} />
-            <text x={(sx + ex) / 2} y={(sy + ey) / 2 + 4} textAnchor="middle" fill="#e2e8f0" fontSize="12" fontWeight="600">{e} · {f(r.reports[e], 1)}</text>
+            <line x1={sx} y1={sy} x2={ex} y2={ey} stroke={on ? C.teal : "#94a3b8"} strokeWidth={on ? 4 : 2} markerEnd={`url(#${on ? "ahs" : "ah"})`} strokeDasharray={on ? "" : "6 4"} />
+            <rect x={(sx + ex) / 2 - 30} y={(sy + ey) / 2 - 12} width="60" height="24" rx="12" fill={act ? C.violet : "#fff"} stroke={on ? C.teal : "#cbd5e1"} />
+            <text x={(sx + ex) / 2} y={(sy + ey) / 2 + 4} textAnchor="middle" fill={act ? "#fff" : "#0f172a"} fontSize="12" fontWeight="600">{e} · {f(r.reports[e], 1)}</text>
           </g>
         );
       })}
       {Object.entries(POS).map(([n, [x, y]]) => (
-        <g key={n}><circle cx={x} cy={y} r="22" fill="#111c33" stroke={C.blue} strokeWidth="2" /><text x={x} y={y + 6} textAnchor="middle" fill="#fff" fontSize="17" fontWeight="700">{n}</text></g>
+        <g key={n}><circle cx={x} cy={y} r="22" fill="#eff4ff" stroke={C.blue} strokeWidth="2" /><text x={x} y={y + 6} textAnchor="middle" fill="#0f172a" fontSize="17" fontWeight="700">{n}</text></g>
       ))}
     </svg>
   );
@@ -312,9 +312,9 @@ export default function App() {
     <div className="app">
       <header className="hero">
         <div className="orb o1" /><div className="orb o2" />
-        <span className="eyebrow">Autonomous Systems · Assignment 04</span>
+        <span className="eyebrow">Autonomous Systems · Assignment 04 · Mechanism Design</span>
         <h1>Mechanism <span>Lab</span></h1>
-        <p>Second-price auctions, first-price equilibrium deviations and VCG procurement – explored with live, interactive simulations.</p>
+        <p>An empirical study of incentive compatibility: second-price auctions, first-price equilibrium deviations, and VCG procurement on a directed network. All figures are interactive and backed by seeded Monte Carlo experiments.</p>
         <nav>{TABS.map((t) => <button key={t} className={t === tab ? "on" : ""} onClick={() => setTab(t)}>{t}</button>)}</nav>
       </header>
       <main>
