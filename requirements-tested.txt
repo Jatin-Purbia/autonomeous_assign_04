@@ -1,0 +1,6 @@
+# Direct dependencies used for the verified run (Python 3.10.11).
+numpy==1.26.4
+pandas==2.2.2
+matplotlib==3.9.0
+streamlit==1.32.0
+pytest==8.4.2

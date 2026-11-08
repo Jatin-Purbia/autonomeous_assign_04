@@ -1,0 +1,14 @@
+{
+  "trials": 100000,
+  "seed": 42,
+  "checks": {
+    "all_fixed_profiles_truthful_optimal": true,
+    "all_random_rival_bid_sweeps_truthful_optimal": true,
+    "second_price_bid_sweeps_within_mc_tolerance": true,
+    "vcg_path_ABEF": true,
+    "vcg_payments_match_book": true,
+    "no_profitable_vcg_deviations": true,
+    "second_price_within_mc_tolerance": true,
+    "first_price_within_mc_tolerance": true
+  }
+}

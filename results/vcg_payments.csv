@@ -1,0 +1,9 @@
+edge,true_cost,selected,payment,utility
+AB,3.0,True,4.0,1.0
+AC,2.0,False,0.0,0.0
+BD,2.0,False,0.0,0.0
+BE,1.0,True,2.0,1.0
+CE,3.0,False,0.0,0.0
+CF,5.0,False,0.0,0.0
+DF,2.0,False,0.0,0.0
+EF,1.0,True,3.0,2.0
