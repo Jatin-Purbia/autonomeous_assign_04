@@ -1,6 +1,6 @@
 # Mechanism Lab — Autonomous Systems, Assignment 04
 
-A reproducible Python course project covering second-price auctions, first-price equilibrium deviations, and VCG cheapest-path procurement. Includes an interactive Streamlit dashboard, batch experiments, analytical benchmarks, plots, CSVs, and automated tests.
+A reproducible Python course project covering second-price auctions, first-price equilibrium deviations, and VCG cheapest-path procurement. Includes an interactive React dashboard (Vite + Recharts), batch experiments, analytical benchmarks, plots, CSVs, and automated tests.
 
 ## Run on Windows / PowerShell
 
@@ -12,7 +12,7 @@ The current workspace has a tested local `.venv` assembled from compatible insta
 .\run.ps1 app
 ```
 
-If PowerShell blocks local scripts, use `.\.venv\Scripts\python.exe -m streamlit run app.py` directly (and the same interpreter for tests and batch runs). This local environment references installed packages on this computer and is not portable. On another computer, create a clean environment and install the declared requirements:
+If PowerShell blocks local scripts, use `python export_web_data.py` then `cd web; npm install; npm run dev` (use the venv interpreter for Python steps). This local environment references installed packages on this computer and is not portable. On another computer, create a clean environment and install the declared requirements:
 
 From this project folder:
 
@@ -20,10 +20,10 @@ From this project folder:
 python -m pip install -r requirements.txt
 python run_experiments.py --trials 100000 --seed 42
 python -m pytest -q
-python -m streamlit run app.py
+cd web; npm install; npm run dev
 ```
 
-Open the local URL printed by Streamlit, normally http://localhost:8501. Stop the server with Ctrl+C. A virtual environment is optional: create it with `python -m venv .venv`, then use `.\.venv\Scripts\python.exe` instead of `python` in the commands above. No API key, internet access, or book parsing dependency is needed to run the project after installing requirements.
+Open the local URL printed by Vite, normally http://localhost:5173. Stop the server with Ctrl+C. Run `python run_experiments.py` then `python export_web_data.py` to refresh the dashboard data. A virtual environment is optional: create it with `python -m venv .venv`, then use `.\.venv\Scripts\python.exe` instead of `python` in the commands above. No API key, internet access, or book parsing dependency is needed to run the project after installing requirements.
 
 ## Deliverables
 
@@ -33,10 +33,10 @@ Open the local URL printed by Streamlit, normally http://localhost:8501. Stop th
 - `results/part1c/*.png`: nine corresponding plots for the two-rival extension.
 - `results/*.png`: ten overview figures, including both nine-panel grids and the directed book graph.
 - `results/validation.json`: seed, trial count, and checks for the generated run.
-- `app.py`: dashboard with simulation controls, downloads, and an interactive VCG misreport experiment.
+- `web/`: React dashboard (Vite + Recharts) with interactive bid curves, first-price deviations, and a live VCG network/misreport experiment. `export_web_data.py` converts `results/*.csv` into `web/public/data.json`.
 - `auction_lab/core.py`: auction resolution, exact expectations, Dijkstra, and VCG counterfactual payments.
 - `auction_lab/experiments.py`: Monte Carlo and deterministic experiment definitions.
-- `tests/`: rules, dominant-strategy checks, numerical benchmarks, CLI artifact generation, and Streamlit application interactions.
+- `tests/`: rules, dominant-strategy checks, numerical benchmarks, CLI artifact generation, and the web data export.
 - [Testing record](TESTING.md): test results, runtime versions, coverage, and verification limits. Exact tested direct dependencies are in `requirements-tested.txt`.
 
 The book source is `book/multiagent-systems_compress.pdf`, Figure 7.3, printed page 300 (PDF page 349). Edge directions and costs were checked visually. Procurement payments are computed rather than hard-coded.
@@ -67,4 +67,4 @@ The prompt's repeated “parts A and C” is treated as repeating both second-pr
 python run_experiments.py --trials 20000 --seed 7 --output results_demo
 ```
 
-The dashboard defaults to 100,000 trials per configuration and permits 200,000; submitted batch results use 100,000 and seed 42. Smaller CLI runs are for quick demonstrations or automated smoke tests and do not meet the submitted experiment's trial-count requirement. Normal 95% intervals may miss analytical values by chance and can be unreliable for very rare wins. The separate automated simulation checks use tolerance `6*SE + 36/N` for bounded utilities and deterministic seeds; the correction handles zero observed wins. The test suite includes Streamlit AppTest interaction tests; it does not substitute for rendering checks in every browser. Dashboard tables use HTML to avoid depending on optional Arrow binary builds.
+Submitted batch results use 100,000 and seed 42. Smaller CLI runs are for quick demonstrations or automated smoke tests and do not meet the submitted experiment's trial-count requirement. Normal 95% intervals may miss analytical values by chance and can be unreliable for very rare wins. The separate automated simulation checks use tolerance `6*SE + 36/N` for bounded utilities and deterministic seeds; the correction handles zero observed wins. The dashboard was visually checked in one headless browser only.

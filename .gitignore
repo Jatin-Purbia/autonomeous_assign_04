@@ -3,3 +3,5 @@ __pycache__/
 tmp/
 .venv/
 pytest-cache-files-*/
+web/node_modules/
+web/dist/

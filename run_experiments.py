@@ -137,7 +137,7 @@ AB (on the truthful path) and AC (off it) each report 0,0.5,...,10, holding all 
 
 {table(pd.DataFrame([dict(check=k,passed=v) for k,v in checks.items()]))}
 
-Run `python -m pytest -q` (or `./run.ps1 test` in the prepared Windows environment) for unit, property, batch CLI, and Streamlit interaction tests. These validation flags concern the generated simulation run; the test suite is separate. Numerical validation uses tolerance 6*SE + 36/N, with the bounded-sample correction protecting rare-event cases where no wins were sampled and empirical SE is zero. This differs from the displayed normal 95% confidence intervals, which can be unreliable for rare events. CSVs contain full precision; plots and report tables round for readability. No claim of real-world bidder behavior is made: conclusions apply to the specified independent-uniform private-value models.
+Run `python -m pytest -q` (or `./run.ps1 test` in the prepared Windows environment) for unit, property, batch CLI, and web-export tests. These validation flags concern the generated simulation run; the test suite is separate. Numerical validation uses tolerance 6*SE + 36/N, with the bounded-sample correction protecting rare-event cases where no wins were sampled and empirical SE is zero. This differs from the displayed normal 95% confidence intervals, which can be unreliable for rare events. CSVs contain full precision; plots and report tables round for readability. No claim of real-world bidder behavior is made: conclusions apply to the specified independent-uniform private-value models.
 """
     (out/'REPORT.md').write_text(report,encoding='utf-8')
     if not all(checks.values()):

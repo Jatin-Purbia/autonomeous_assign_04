@@ -2,7 +2,6 @@ import json
 from pathlib import Path
 import subprocess
 import sys
-from streamlit.testing.v1 import AppTest
 
 ROOT=Path(__file__).resolve().parents[1]
 
@@ -23,20 +22,10 @@ def test_batch_cli_writes_complete_report(tmp_path):
         assert image.read_bytes().startswith(b'\x89PNG') and image.stat().st_size>10000
 
 
-def test_dashboard_controls_and_vcg_deviation():
-    app=AppTest.from_file(str(ROOT/'app.py'),default_timeout=90).run()
-    assert not app.exception
-    assert len(app.tabs)==4
-    # Address controls by label; sidebar/main ordering varies by Streamlit release.
-    assert next(w for w in app.selectbox if w.label=='Trials per configuration').value==100_000
-    next(w for w in app.selectbox if w.label=='Rivals in the nine-plot grid').select(2).run()
-    next(w for w in app.selectbox if w.label=='Bidder 1 valuation').select('0.8').run()
-    next(w for w in app.selectbox if w.label=='Reporting edge').select('AC').run()
-    app.slider[0].set_value(0.).run()
-    assert not app.exception
-    metric_values={m.label:m.value for m in app.metric}
-    assert metric_values['Chosen path']=='ACEF'
-    assert metric_values['Payment to edge']=='1.0'
-    assert metric_values['Utility at true cost']=='-1.0'
-    app.number_input[0].set_value(7).run()
-    assert not app.exception
+def test_web_data_export(tmp_path):
+    import json
+    import export_web_data
+    out=tmp_path/'data.json'
+    export_web_data.main(ROOT/'results',out)
+    data=json.loads(out.read_text(encoding='utf-8'))
+    assert {'second_price','second_price_bids','fixed_bids','first_price','vcg_payments','vcg_deviations','meta'}<=set(data)
