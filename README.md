@@ -28,11 +28,3 @@ npm run dev
 ```
 
 Open http://localhost:5173.
-
-## Shortcuts (Windows, uses the local `.venv`)
-
-```powershell
-.\run.ps1 experiments
-.\run.ps1 test
-.\run.ps1 app
-```
