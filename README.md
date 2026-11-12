@@ -12,12 +12,6 @@ python -m pip install -r requirements.txt
 python run_experiments.py --trials 100000 --seed 42
 ```
 
-## Run the tests
-
-```powershell
-python -m pytest -q
-```
-
 ## Run the dashboard (needs Node 18+)
 
 ```powershell
