@@ -3,8 +3,6 @@ from dataclasses import dataclass
 import heapq
 import math
 
-import numpy as np
-
 VALUES = (0.2, 0.5, 0.8)
 STRATEGIES = ("truthful", "half", "random")
 BOOK_COSTS = {"AB": 3., "AC": 2., "BD": 2., "BE": 1.,
