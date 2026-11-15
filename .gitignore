@@ -5,3 +5,5 @@ tmp/
 pytest-cache-files-*/
 web/node_modules/
 web/dist/
+latex_report
+latex_report.zip
